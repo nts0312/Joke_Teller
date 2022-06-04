@@ -34,6 +34,7 @@ button {
   border: none;
   border-radius: 5px;
   box-shadow: 2px 2px 20px 10px rgba(0, 0, 0, 0.2);
+  margin-left: 400px;
 }
 
 button:hover {
@@ -58,6 +59,8 @@ button:disabled {
   }
 
   button {
+    margin-right: 400px;
+    margin-top: 500px;
     box-shadow: 5px 5px 30px 20px rgba(0, 0, 0, 0.5);
   }
 }

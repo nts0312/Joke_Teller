@@ -101,13 +101,19 @@ const VoiceRSS = {
     throw "The browser does not support HTTP request";
   },
 };
+
+//code starts
 const button = document.getElementById("button");
 const audioElement = document.getElementById("audio");
 
-function test() {
+function toggleButton() {
+  button.disabled = !button.disabled;
+}
+
+function textToAudio(joke) {
   VoiceRSS.speech({
     key: "f04169e860694f99b158193232114a13",
-    src: "Hello world",
+    src: joke,
     hl: "en-us",
     r: 0,
     c: "mp3",
@@ -116,4 +122,24 @@ function test() {
   });
 }
 
-test();
+async function getJokes() {
+  let joke = "";
+  const apiUrl = "https://v2.jokeapi.dev/joke/Any";
+  toggleButton();
+
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    if (data.setup) {
+      joke = `${data.setup} ...${data.delivery}`;
+    } else {
+      joke = data.joke;
+    }
+    textToAudio(joke);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+button.addEventListener("click", getJokes);
+audioElement.addEventListener("ended", toggleButton);
